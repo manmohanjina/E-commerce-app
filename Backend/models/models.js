@@ -1,11 +1,17 @@
-const mongoose = require("mongoose");
 
-const CheckSchema = mongoose.Schema({
+const mongoose=require('mongoose')
+
+const userRegisterSchema=mongoose.Schema({
     name:String,
-    age:Number,
-});
+    email:String,
+    password:String,
+
+})
 
 
-const heroModel=mongoose.model("name we want to put here",CheckSchema)
+const UserRegisterModel=mongoose.model("user_auth",userRegisterSchema)
 
-module.exports={heroModel}
+
+module.exports={
+    UserRegisterModel
+}

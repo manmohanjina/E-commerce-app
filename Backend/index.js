@@ -3,31 +3,34 @@ const app = express();
 app.use(express.json());
 require("dotenv").config();
 const { connection } = require("./db/db");
-const { heroModel } = require("./models/models");
+const { userAuthRoute } = require("./routes/userAuth");
+const { userLoingRoute } = require("./routes/userLoginRoute");
+const { validator } = require("./validatorM.D/valimiddleware");
 
 
 
-app.get("/",(req,res)=>{
-   res.send('welcom')
+
+
+
+app.use(validator)
+app.get('/secret',async(req,res)=>{
+  console.log("secret data")
+  res.send('ok')
+})
+
+app.use('/',userLoingRoute)
+app.use("/",userAuthRoute)
+app.get('/',async(req,res)=>{
+  try {
+    res.send({"msg":"welcome"})
+  } catch (error) {
+    res.send({"err":"errorr"})
+  }
 })
 
 
-app.post("/post", async (req, res) => {
-  let payload = req.body;
 
-  try {
-   const hero = new heroModel(payload);
-  await hero.save()
-  res.send('ok')
-  } catch (error) {
-   console.log(error);
-  }
-});
 
 app.listen(process.env.port, () => {
-  try {
-    connection();
-  } catch (err) {
-    console.log(err);
-  }
+  connection()
 });
