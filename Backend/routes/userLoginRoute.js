@@ -8,7 +8,7 @@ userLoingRoute.use(express.json());
 
 
 
-userLoingRoute.use(validator)
+  // userLoingRoute.use(validator)
 
 
 userLoingRoute.post("/login", async (req, res) => {
@@ -19,7 +19,7 @@ userLoingRoute.post("/login", async (req, res) => {
     const plain_pass=isUserPresent[0].password;
     
     bcrypt.compare(password,plain_pass, (err,result)=>{
-       // console.log(result,"result")
+
         if(err){
             res.send({"err":"wrong Crendential"})
         }

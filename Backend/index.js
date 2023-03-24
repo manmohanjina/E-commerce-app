@@ -12,14 +12,20 @@ const { validator } = require("./validatorM.D/valimiddleware");
 
 
 
-app.use(validator)
-app.get('/secret',async(req,res)=>{
-  console.log("secret data")
-  res.send('ok')
-})
+
+
+
 
 app.use('/',userLoingRoute)
 app.use("/",userAuthRoute)
+
+app.use(validator)
+app.get('/data',(req,res)=>{
+  res.send("protected data")
+})
+
+
+
 app.get('/',async(req,res)=>{
   try {
     res.send({"msg":"welcome"})

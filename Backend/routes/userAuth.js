@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const { UserRegisterModel } = require("../models/models");
-const { validator } = require("../validatorM.D/valimiddleware");
+
 const bcrypt=require('bcrypt')
 require('dotenv').config()
 const userAuthRoute = express.Router();
@@ -11,17 +11,20 @@ userAuthRoute.use(express.json());
 
  
 userAuthRoute.post('/register',async(req,res)=>{
-    let {name,email,password}=req.body;
+    let {name,email,password,phone}=req.body;
+  
 
 try {
+    const saltround=process.env.saltrounds;
+    //salt round should be typeod number;
 
-     bcrypt.hash(password,4,async(err,hashed_pass)=>{
+     bcrypt.hash(password,+saltround ,async(err,hashed_pass)=>{
         if(err){
             res.send({"err":"error while hashing "})
             console.log(err)
         }
         else{
-            let new_user=await UserRegisterModel({name,email,password:hashed_pass})
+            let new_user=await UserRegisterModel({name,email,password:hashed_pass,phone})
             await new_user.save() 
             res.send({"msg":"user_register_succ"})
         }
@@ -30,7 +33,7 @@ try {
     
 
 } catch (error) {
-    
+    console.log(error)
 }
 })
 

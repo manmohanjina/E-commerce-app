@@ -1,17 +1,31 @@
+const mongoose = require("mongoose");
 
-const mongoose=require('mongoose')
+const userRegisterSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      require: true,
+      trim: true,
+    },
+    email: { type: String, require: true, unique: true },
+    password: {
+      type: String,
+      require: true,
+    },
+    phone: {
+      type: String,
+      require: true,
+    },
+    role: {
+      type: Number,
+      default: 0,
+    },
+  },
+  { timestamps: true }
+);
 
-const userRegisterSchema=mongoose.Schema({
-    name:String,
-    email:String,
-    password:String,
+const UserRegisterModel = mongoose.model("user_auth", userRegisterSchema);
 
-})
-
-
-const UserRegisterModel=mongoose.model("user_auth",userRegisterSchema)
-
-
-module.exports={
-    UserRegisterModel
-}
+module.exports = {
+  UserRegisterModel,
+};
