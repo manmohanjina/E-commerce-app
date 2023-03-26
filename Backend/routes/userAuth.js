@@ -11,7 +11,7 @@ userAuthRoute.use(express.json());
 
  
 userAuthRoute.post('/register',async(req,res)=>{
-    let {name,email,password,phone}=req.body;
+    let {name,email,password,phone,security}=req.body;
   
 
 try {
@@ -24,7 +24,7 @@ try {
             console.log(err)
         }
         else{
-            let new_user=await UserRegisterModel({name,email,password:hashed_pass,phone})
+            let new_user=await UserRegisterModel({name,email,password:hashed_pass,phone,security})
             await new_user.save() 
             res.send({"msg":"user_register_succ"})
         }

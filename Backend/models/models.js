@@ -20,6 +20,10 @@ const userRegisterSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    security:{
+      type:String,
+      require:true
+    }
   },
   { timestamps: true }
 );
